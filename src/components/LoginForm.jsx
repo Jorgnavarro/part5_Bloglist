@@ -1,5 +1,32 @@
+import { useContext } from "react"
+import { ContextGlobal } from "../context/globalContext"
+import loginService from "../services/login"
+import blogService from "../services/blog"
 
 export function LoginForm () {
+    const {setErrorMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)
+
+    const handleLogin = async (event) => {
+        event.preventDefault()
+        try{
+          const user = await loginService.login({
+            username, password
+          })
+          window.localStorage.setItem(
+            'loggedUserBlogs', JSON.stringify(user)
+          )
+          //blogService.setToken(user.token)
+          setUser(user)
+          setUsername("")
+          setPassword("")
+        }catch(exception){
+          setErrorMessage('Wrong credentials')
+          setTimeout(()=>{
+            setErrorMessage(null)
+          }, 5000)
+        }
+    }
+
     return (
         <form onSubmit={handleLogin} id='loginForm' className="mb-3">
             <div className="mb-3">
@@ -18,7 +45,7 @@ export function LoginForm () {
                 <input
                     type='password'
                     className="form-control"
-                    id="inputPassword"
+                    id="password"
                     value={password}
                     onChange={({ target }) => setPassword(target.value)}
                 />
