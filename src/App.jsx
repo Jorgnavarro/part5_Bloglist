@@ -4,6 +4,8 @@ import blogService from './services/blog'
 import Blog from './components/Blog'
 import { Notification } from './components/Notification'
 import { LoginForm } from './components/LoginForm'
+import { HeaderUserInfo } from './components/HeaderUserInfo'
+import { AddBlogForm } from './components/AddBlogForm'
 
 function App() {
   const [blogs, setBlogs] = useState([])
@@ -15,7 +17,7 @@ function App() {
         setBlogs(initialBlogList)
       })
   }, [])
-  console.log(user)
+
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUserBlogs')
@@ -31,11 +33,10 @@ function App() {
       <h1 className='text-center mt-3 mb-5'>Blogs 🗒️</h1>
       {user === null
       ? <LoginForm/>
-      :<div>
-        <p>{user.name} logged-in</p>
-      </div>
+      : <HeaderUserInfo/>
       }
       <Notification message={errorMessage}/>
+      {user && <AddBlogForm/>}
       {user && 
       <ul className='list-group'>
         {blogs.map(blog => {

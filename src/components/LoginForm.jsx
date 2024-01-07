@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { ContextGlobal } from "../context/globalContext"
 import loginService from "../services/login"
-import blogService from "../services/blog"
+//import blogService from "../services/blog"
 
 export function LoginForm () {
     const {setErrorMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)

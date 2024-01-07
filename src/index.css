@@ -50,6 +50,23 @@ h1 {
   width: 20rem;
 }
 
+.headerUser{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#addBlogForm{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoBlog{
+  gap: 2rem;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
