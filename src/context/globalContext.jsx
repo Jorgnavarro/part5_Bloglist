@@ -4,7 +4,11 @@ export const ContextGlobal = createContext();
 
 /* eslint-disable react/prop-types */
 export const ContextProvider = ( { children } ) => {
+    const [blogs, setBlogs] = useState([])
+
     const [errorMessage, setErrorMessage] = useState(null)
+
+    const [infoMessage, setInfoMessage] = useState(null)
 
     const [username, setUsername] = useState("")
 
@@ -13,8 +17,12 @@ export const ContextProvider = ( { children } ) => {
     const [user, setUser] = useState(null)
 
     const values = {
+        blogs,
+        setBlogs,
         errorMessage, 
         setErrorMessage,
+        infoMessage,
+        setInfoMessage,
         username,
         setUsername,
         password,

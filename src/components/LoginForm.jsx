@@ -1,10 +1,10 @@
 import { useContext } from "react"
 import { ContextGlobal } from "../context/globalContext"
 import loginService from "../services/login"
-//import blogService from "../services/blog"
+import blogService from "../services/blog"
 
 export function LoginForm () {
-    const {setErrorMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)
+    const {setErrorMessage, setInfoMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -15,12 +15,18 @@ export function LoginForm () {
           window.localStorage.setItem(
             'loggedUserBlogs', JSON.stringify(user)
           )
-          //blogService.setToken(user.token)
+          blogService.setToken(user.token)
           setUser(user)
           setUsername("")
           setPassword("")
+
+          setInfoMessage(`Welcome ${username}`)
+          setTimeout(()=>{
+            setInfoMessage(null)
+          }, 5000)
+
         }catch(exception){
-          setErrorMessage('Wrong credentials')
+          setErrorMessage('Wrong username or password')
           setTimeout(()=>{
             setErrorMessage(null)
           }, 5000)

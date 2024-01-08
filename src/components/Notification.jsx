@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-export function Notification({ message }) { 
+export function Notification({ message, className }) { 
 
     if(message === null){
         return null
@@ -7,7 +7,7 @@ export function Notification({ message }) {
 
 
     return (
-        <div className="alert alert-danger" role="alert" id="container-error">
+        <div className={`alert ${className} text-center`} role="alert" id="container-error">
             <strong>  {message} </strong>
         </div>
     )

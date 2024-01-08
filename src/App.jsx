@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { ContextGlobal } from './context/globalContext'
 import blogService from './services/blog'
 import Blog from './components/Blog'
@@ -8,15 +8,14 @@ import { HeaderUserInfo } from './components/HeaderUserInfo'
 import { AddBlogForm } from './components/AddBlogForm'
 
 function App() {
-  const [blogs, setBlogs] = useState([])
-  const {errorMessage, setErrorMessage, setUser, user} = useContext(ContextGlobal)
+  const {blogs, setBlogs, errorMessage, infoMessage, setUser, user} = useContext(ContextGlobal)
   
   useEffect(() => {
     blogService.getAll()
       .then(initialBlogList => {
         setBlogs(initialBlogList)
       })
-  }, [])
+  }, [setBlogs])
 
 
   useEffect(() => {
@@ -24,18 +23,19 @@ function App() {
     if(loggedUserJSON){
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      //blogService.setToken(user.token)
+      blogService.setToken(user.token)
     }
   },[setUser])
 
   return (
     <div className='container containerBlogs'>
       <h1 className='text-center mt-3 mb-5'>Blogs 🗒️</h1>
+      <Notification className="alert-danger" message={errorMessage}/>
       {user === null
       ? <LoginForm/>
       : <HeaderUserInfo/>
       }
-      <Notification message={errorMessage}/>
+      <Notification className="alert-success" message={infoMessage}/>
       {user && <AddBlogForm/>}
       {user && 
       <ul className='list-group'>
