@@ -7,6 +7,7 @@ import { LoginForm } from './components/LoginForm'
 import { HeaderUserInfo } from './components/HeaderUserInfo'
 import { AddBlogForm } from './components/AddBlogForm'
 
+
 function App() {
   const {blogs, setBlogs, errorMessage, infoMessage, setUser, user} = useContext(ContextGlobal)
   

@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useContext, useRef } from "react"
 import blogService from "../services/blog"
-import { useContext } from "react"
 import { ContextGlobal } from "../context/globalContext"
+import Togglable from "./Togglable"
 
 
 export function AddBlogForm () {
@@ -9,7 +9,7 @@ export function AddBlogForm () {
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
     const [url, setUrl] = useState("")
-
+    const blogFormRef = useRef()
 
 
     const addBlog = (e) => {
@@ -20,6 +20,7 @@ export function AddBlogForm () {
                 author,
                 url
             }
+            blogFormRef.current.toggleVisibility()
             blogService.create(newBlog)
               .then(blogCreated => {
                 setBlogs([...blogs, blogCreated]);
@@ -42,6 +43,7 @@ export function AddBlogForm () {
     }
 
     return(
+    <Togglable ref={blogFormRef} buttonLabel="Create a blog">
         <div>
             <h2>Create a new blog</h2>
             <form onSubmit={addBlog} id='addBlogForm' className="mb-3">
@@ -88,9 +90,10 @@ export function AddBlogForm () {
                     </div>
                 </div>
                 <div className="align-self-center">
-                    <button type='submit'>Create</button>
+                    <button className="btn btn-outline-success" type='submit'>Create</button>
                 </div>
             </form>
         </div>
+    </Togglable>
     )
 }
