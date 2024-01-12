@@ -1,52 +1,7 @@
+
+
 /* eslint-disable react/prop-types */
-export const BlogDetail = ({ blog, style, handleLikes }) => {
-
-
-    
-
-    // const handleLikesAndUpdate = () => {
-    //     console.log(blog.id)
-    //     setLike(like + 1)
-        
-    //     const updatedBlog = {
-    //         user: blog.user.id,
-    //         author: blog.author,
-    //         title: blog.title,
-    //         url: blog.url,
-    //         likes: like
-    //     }
-
-    //         blogService.update(blog.id, updatedBlog)
-    //             .then(blogUpdated => {
-    //                 setBlogs(blogs.map(b => {
-    //                     b.id !== blog.id ? b : blogUpdated
-    //                 }))
-    //             })
-    //             .catch(error => {
-    //                 console.log(error)
-    //             })
-    
-            
-            
-            
-            
-            
-            // blogService.update()
-            //     .then(blogUpdate => {
-            //         setBlogs(blogs.map(b => {
-            //             b.id !== blog.id ? b : blogUpdate
-            //         }))
-            //     })
-            //     .catch(error => {
-            //         setErrorMessage(
-            //             `${error}`
-            //         )
-            //         setTimeout(() => {
-            //             setErrorMessage(null)
-            //         }, 5000)
-
-            //     })
-    //}
+export const BlogDetail = ({ blog, style, handleLikes, userDDBB }) => {
 
     return(
         <ul className="listDetails" style={style}>
@@ -58,6 +13,9 @@ export const BlogDetail = ({ blog, style, handleLikes }) => {
             </li>
             <li>
             {blog.author}
+            </li>
+            <li>
+                {blog.user?.id == userDDBB ? <button className="btn btn-outline-danger">Remove</button>: ""}
             </li>
         </ul>
     )

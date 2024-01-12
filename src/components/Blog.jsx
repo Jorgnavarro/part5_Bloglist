@@ -2,7 +2,7 @@ import { useState } from "react"
 import { BlogDetail } from "./BlogDetails"
 
 /* eslint-disable react/prop-types */
-const Blog = ({ blog, updatedBlog }) => {
+const Blog = ({ blog, updatedBlog, userDDBB }) => {
     const [like, setLike] = useState(blog.likes)
     const [visible, setVisible] = useState(false)
     const showWhenVisible = {display: visible ? '' : 'none'}
@@ -28,7 +28,7 @@ const Blog = ({ blog, updatedBlog }) => {
             {blog.title} - {blog.author}
             <button className="btn btn-outline-primary" onClick={toggleVisibility}>{visible ? "Hide details":"View details"}</button>
            </div>
-           <BlogDetail key={blog.id} style={showWhenVisible} blog={blog} handleLikes={handleLikes} />
+           <BlogDetail key={blog.id} userDDBB={userDDBB} style={showWhenVisible} blog={blog} handleLikes={handleLikes} />
         </li>
     )
 }

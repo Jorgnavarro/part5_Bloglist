@@ -30,6 +30,7 @@ body {
   color: rgba(255, 255, 255, 0.87);
   background-image: url('./assets/retrosupply-jLwVAUtLOAQ-unsplash.jpg');
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: center;
   background-size: cover;
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .6);

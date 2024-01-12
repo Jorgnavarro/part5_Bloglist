@@ -3,7 +3,7 @@ import { ContextGlobal } from "../context/globalContext"
 import loginService from "../services/login"
 import blogService from "../services/blog"
 
-export function LoginForm () {
+export function LoginForm ({ localUser }) {
     const {setErrorMessage, setInfoMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)
 
     const handleLogin = async (event) => {
@@ -31,6 +31,7 @@ export function LoginForm () {
             setErrorMessage(null)
           }, 5000)
         }
+        localUser()
     }
 
     return (

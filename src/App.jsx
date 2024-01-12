@@ -1,6 +1,7 @@
-import { useEffect, useContext} from 'react'
+import { useEffect, useContext, useState} from 'react'
 import { ContextGlobal } from './context/globalContext'
 import blogService from './services/blog'
+import userService from './services/user'
 import Blog from './components/Blog'
 import { Notification } from './components/Notification'
 import { LoginForm } from './components/LoginForm'
@@ -9,6 +10,8 @@ import { AddBlogForm } from './components/AddBlogForm'
 
 
 function App() {
+
+  const [userDDBB, setUserDDBB] = useState({})
 
   const {blogs, setBlogs, errorMessage, infoMessage, setUser, user} = useContext(ContextGlobal)
 
@@ -39,6 +42,19 @@ function App() {
     }
   },[setUser])
 
+  const getLocalUser = async () => {
+    try{
+      const loggedUserJSON = window.localStorage.getItem('loggedUserBlogs')
+      const userToSearch = JSON.parse(loggedUserJSON)
+      const response = await userService.getUser(userToSearch.username)
+      setUserDDBB(response[0].id)
+    }catch(e){
+      console.log(e)
+    }
+    
+  }
+  
+
   const updateLikesBlog = async (id, newObject) => {
     try{
       const response = await blogService.update(id, newObject)
@@ -60,7 +76,7 @@ function App() {
       <h1 className='text-center mt-3 mb-5'>Blogs 🗒️</h1>
       <Notification className="alert-danger" message={errorMessage}/>
       {user === null
-      ? <LoginForm/>
+      ? <LoginForm localUser={getLocalUser}/>
       : <HeaderUserInfo/>
       }
       <Notification className="alert-success" message={infoMessage}/>
@@ -69,7 +85,7 @@ function App() {
       {user && 
       <ul className='list-group'>
         {blogs.map(blog => {
-          return <Blog key={blog.id} blog={blog} updatedBlog={updateLikesBlog}/>
+          return <Blog key={blog.id} blog={blog} userDDBB={userDDBB} updatedBlog={updateLikesBlog}/>
         })}
       </ul>}
     </div>
