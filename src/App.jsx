@@ -13,14 +13,14 @@ function App() {
 
   const [userDDBB, setUserDDBB] = useState({})
 
-  const {blogs, setBlogs, errorMessage, infoMessage, setUser, user} = useContext(ContextGlobal)
+  const {blogs, setBlogs, errorMessage, infoMessage, setUser, user, modifierLikes} = useContext(ContextGlobal)
 
   useEffect(() => {
     blogService.getAll()
       .then(initialBlogList => {
         setBlogs(initialBlogList)
       })
-  }, [setBlogs])
+  }, [setBlogs, modifierLikes])
 
   
 
@@ -42,17 +42,24 @@ function App() {
     }
   },[setUser])
 
-  const getLocalUser = async () => {
-    try{
-      const loggedUserJSON = window.localStorage.getItem('loggedUserBlogs')
-      const userToSearch = JSON.parse(loggedUserJSON)
-      const response = await userService.getUser(userToSearch.username)
-      setUserDDBB(response[0].id)
-    }catch(e){
-      console.log(e)
+  useEffect(()=> {
+    async function getLocalUser (){
+      try{
+        const loggedUserJSON = window.localStorage.getItem('loggedUserBlogs')
+        const userToSearch = JSON.parse(loggedUserJSON)
+        if(userToSearch !== null){
+          const response = await userService.getUser(userToSearch.username)
+          setUserDDBB(response[0].id)
+        }else{
+          throw("User it's not ready")
+        }
+      }catch(e){
+        console.log(e)
+      }
     }
-    
-  }
+  getLocalUser()
+
+  },[user])
   
 
   const updateLikesBlog = async (id, newObject) => {
@@ -71,21 +78,36 @@ function App() {
 
   }
 
+  const deleteABlog = async (id) => {
+
+    try{
+      const response = await blogService.deleteBlog(id)
+      console.log(response)
+      setBlogs(
+         blogs.filter(blog => {
+           return blog.id !== id
+         })
+      )
+    }catch(error){
+      console.log(error)
+    }
+  }
+
   return (
     <div className='container containerBlogs'>
       <h1 className='text-center mt-3 mb-5'>Blogs 🗒️</h1>
       <Notification className="alert-danger" message={errorMessage}/>
       {user === null
-      ? <LoginForm localUser={getLocalUser}/>
+      ? <LoginForm/>
       : <HeaderUserInfo/>
       }
       <Notification className="alert-success" message={infoMessage}/>
       {user && <AddBlogForm/>}
-      <button onClick={sortByLikes} className="btn btn-outline-success mb-2">Sort by likes</button>
+      {user && <button onClick={sortByLikes} className="btn btn-outline-success mb-2">Sort by likes</button>}
       {user && 
       <ul className='list-group'>
         {blogs.map(blog => {
-          return <Blog key={blog.id} blog={blog} userDDBB={userDDBB} updatedBlog={updateLikesBlog}/>
+          return <Blog key={blog.id} blog={blog} userDDBB={userDDBB} updatedBlog={updateLikesBlog} deleteABlog={deleteABlog}/>
         })}
       </ul>}
     </div>

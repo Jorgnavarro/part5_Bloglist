@@ -3,7 +3,8 @@ import { ContextGlobal } from "../context/globalContext"
 import loginService from "../services/login"
 import blogService from "../services/blog"
 
-export function LoginForm ({ localUser }) {
+/* eslint-disable react/prop-types */
+export function LoginForm () {
     const {setErrorMessage, setInfoMessage, username, setUsername, setUser, password, setPassword} = useContext(ContextGlobal)
 
     const handleLogin = async (event) => {
@@ -31,7 +32,6 @@ export function LoginForm ({ localUser }) {
             setErrorMessage(null)
           }, 5000)
         }
-        localUser()
     }
 
     return (
