@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState} from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { ContextGlobal } from './context/globalContext'
 import blogService from './services/blog'
 import userService from './services/user'
@@ -22,11 +22,11 @@ function App() {
       })
   }, [setBlogs, modifierLikes])
 
-  
+
 
   const sortByLikes = () => {
     const arrSort = [...blogs]
-    arrSort.sort((a,b)=> {
+    arrSort.sort((a,b) => {
       return b.likes - a.likes
     })
     setBlogs(arrSort)
