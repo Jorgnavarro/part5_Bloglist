@@ -27,11 +27,11 @@ const BlogDetail = ({ blog, style, handleLikes, userDDBB, deleteABlog }) => {
 
   return (
     <ul className="listDetails" style={style}>
-      <li>
+      <li className='urlTest'>
         {blog.url}
       </li>
-      <li>
-                likes: {blog.likes} <button onClick={() => handleLikes()} className="btn btn-outline-primary">like</button>
+      <li className='likesTest'>
+                likes: {blog.likes} <button onClick={() => handleLikes()} className="btn btn-outline-primary likeTest">like</button>
       </li>
       <li>
         {blog.author}
