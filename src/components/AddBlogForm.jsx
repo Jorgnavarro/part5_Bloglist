@@ -90,7 +90,7 @@ export function AddBlogForm () {
             </div>
           </div>
           <div className="align-self-center">
-            <button className="btn btn-outline-success" type='submit'>Create</button>
+            <button className="btn btn-outline-success" type='submit' id='btnForm'>Create</button>
           </div>
         </form>
       </div>
