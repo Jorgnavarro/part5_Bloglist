@@ -20,6 +20,7 @@ const BlogDetail = ({ blog, style, handleLikes, userDDBB, deleteABlog }) => {
           icon: 'success',
           title: 'Your blog has been deleted',
           showConfirmButton: false,
+          timer: 3000
         })
       }
     })
@@ -31,13 +32,13 @@ const BlogDetail = ({ blog, style, handleLikes, userDDBB, deleteABlog }) => {
         {blog.url}
       </li>
       <li className='likesTest'>
-                likes: {blog.likes} <button onClick={() => handleLikes()} className="btn btn-outline-primary likeTest">like</button>
+                likes: {blog.likes} <button onClick={() => handleLikes()} className="btn btn-outline-primary likeTest" id="btn-likes">like</button>
       </li>
       <li>
         {blog.author}
       </li>
-      <li>
-        {blog.user?.id === userDDBB ? <button className="btn btn-outline-danger" onClick={() => handleDeleteBlog()}>Remove</button> : ''}
+      <li id='container-btnDelete'>
+        {blog.user?.id === userDDBB ? <button id='btn-delete' className="btn btn-outline-danger" onClick={() => handleDeleteBlog()}>Remove</button> : ''}
       </li>
     </ul>
   )

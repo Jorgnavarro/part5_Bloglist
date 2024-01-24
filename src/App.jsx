@@ -98,7 +98,7 @@ function App() {
       <Notification className="alert-success" message={infoMessage}/>
       {user && <AddBlogForm/>}
       {user && <button onClick={sortByLikes} className="btn btn-outline-success mb-2">Sort by likes</button>}
-      {user && <ul className='list-group'>
+      {user && <ul className='list-group' id='initialList'>
         {blogs.map(blog => {
           return <Blog key={blog.id} blog={blog} userDDBB={userDDBB} updatedBlog={updateLikesBlog} deleteABlog={deleteABlog}/>
         })}

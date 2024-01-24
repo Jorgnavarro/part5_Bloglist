@@ -41,6 +41,20 @@ Cypress.Commands.add('addBlog', ({ title, author, url}) => {
         headers: {
             'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
         }
+    }).then( ({body}) => {
+        localStorage.setItem('blogTest', JSON.stringify(body))
+    })
+    cy.visit('/')
+})
+
+Cypress.Commands.add('deleteBlog', () => {
+    
+    cy.request({
+        url: `http://localhost:3003/api/blogs/${JSON.parse(localStorage.getItem('blogTest')).id}`,
+        method: 'DELETE',
+        headers: {
+            'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
+        }
     })
     cy.visit('/')
 })

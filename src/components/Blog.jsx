@@ -29,7 +29,7 @@ const Blog = ({ blog, updatedBlog, userDDBB, deleteABlog }) => {
     <li id="colorList" className='list-group-item list-group-item-light'>
       <div className="containerInfoBlog">
         {blog.title} - {blog.author}
-        <button className="btn btn-outline-primary" onClick={toggleVisibility}>{visible ? 'Hide details':'View details'}</button>
+        <button id="btn-details" className="btn btn-outline-primary" onClick={toggleVisibility}>{visible ? 'Hide details':'View details'}</button>
       </div>
       <BlogDetail key={blog.id} userDDBB={userDDBB} style={showWhenVisible} blog={blog} handleLikes={handleLikes} deleteABlog={deleteABlog}/>
     </li>

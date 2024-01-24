@@ -8,6 +8,12 @@ describe('blog app', () => {
       password: 'fullstack'
     }
     cy.request('POST', 'http://localhost:3003/api/users', user)
+    const user2 = {
+      name: 'Bocruz Snake',
+      username: 'darkhunter',
+      password: 'fullstack'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users', user2)
     cy.visit('/')
   })
 
@@ -43,5 +49,35 @@ describe('blog app', () => {
       })
       cy.contains('A blog created by Cypress with commands')
     })
+
+    describe('Interacting with a blog', function(){
+      beforeEach(function(){
+        cy.addBlog({
+            title: 'A blog created by Cypress with commands',
+            author: 'Gon Freecks',
+            url: 'hunterXhunter.com'
+        })
+      })
+      it('A blog can have a like', function(){
+          cy.get('#btn-details').click()
+          cy.get('.likesTest').contains('likes: 0')
+          cy.get('#btn-likes').click()
+          cy.get('.likesTest').should('contain', 'likes: 1')
+      })
+      it('A blog can be deleted', function(){
+          cy.get('#btn-details').click()
+          cy.get('#btn-delete').click()
+          cy.get('.swal2-confirm').click()
+          cy.get('#initialList').should('be.empty')
+      })
+      it('A blog cannot be deleted by another user', function(){
+        cy.login({
+          username:'darkhunter', password:'fullstack'
+        })
+        cy.get('#btn-details').click()
+        cy.get('#container-btnDelete').should('be.empty')
+      })
+    })
+    
   })
 })
