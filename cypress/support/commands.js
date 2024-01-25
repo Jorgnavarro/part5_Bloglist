@@ -23,38 +23,38 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
+/*global Cypress, cy*/
 Cypress.Commands.add('login',({ username, password }) => {
-    cy.request('POST', 'http://localhost:3003/api/login', {
-        username, password
-    }).then(({ body }) => {
-        localStorage.setItem('loggedUserBlogs', JSON.stringify(body))
-        cy.visit('/')
-    })
+  cy.request('POST', 'http://localhost:3003/api/login', {
+    username, password
+  }).then(({ body }) => {
+    localStorage.setItem('loggedUserBlogs', JSON.stringify(body))
+    cy.visit('/')
+  })
 })
 
-Cypress.Commands.add('addBlog', ({ title, author, url, likes}) => {
-    cy.request({
-        url: 'http://localhost:3003/api/blogs',
-        method: 'POST',
-        body: {title, author, url, likes},
-        headers: {
-            'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
-        }
-    }).then( ({body}) => {
-        localStorage.setItem('blogTest', JSON.stringify(body))
-    })
-    cy.visit('/')
+Cypress.Commands.add('addBlog', ({ title, author, url, likes }) => {
+  cy.request({
+    url: 'http://localhost:3003/api/blogs',
+    method: 'POST',
+    body: { title, author, url, likes },
+    headers: {
+      'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
+    }
+  }).then( ({ body }) => {
+    localStorage.setItem('blogTest', JSON.stringify(body))
+  })
+  cy.visit('/')
 })
 
 Cypress.Commands.add('deleteBlog', () => {
-    
-    cy.request({
-        url: `http://localhost:3003/api/blogs/${JSON.parse(localStorage.getItem('blogTest')).id}`,
-        method: 'DELETE',
-        headers: {
-            'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
-        }
-    })
-    cy.visit('/')
+
+  cy.request({
+    url: `http://localhost:3003/api/blogs/${JSON.parse(localStorage.getItem('blogTest')).id}`,
+    method: 'DELETE',
+    headers: {
+      'Authorization' : `bearer ${JSON.parse(localStorage.getItem('loggedUserBlogs')).token}`
+    }
+  })
+  cy.visit('/')
 })

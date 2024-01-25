@@ -1,3 +1,4 @@
+/*global describe, beforeEach, cy, it*/
 describe('blog app', () => {
 
   beforeEach(function() {
@@ -38,7 +39,7 @@ describe('blog app', () => {
 
   describe.only('When logged in', function(){
     beforeEach(function(){
-      cy.login({ username: 'Programmer', password: 'fullstack'})
+      cy.login({ username: 'Programmer', password: 'fullstack' })
     })
     it('a blog can be created', function (){
       cy.contains('Create a blog').click()
@@ -54,23 +55,23 @@ describe('blog app', () => {
     describe('Interacting with a blog', function(){
       beforeEach(function(){
         cy.addBlog({
-            title: 'A blog created by Cypress with commands',
-            author: 'Gon Freecks',
-            url: 'hunterXhunter.com',
-            likes: 5
+          title: 'A blog created by Cypress with commands',
+          author: 'Gon Freecks',
+          url: 'hunterXhunter.com',
+          likes: 5
         })
       })
       it('A blog can have a like', function(){
-          cy.get('#btn-details').click()
-          cy.get('.likesTest').contains('likes: 5')
-          cy.get('#btn-likes').click()
-          cy.get('.likesTest').should('contain', 'likes: 6')
+        cy.get('#btn-details').click()
+        cy.get('.likesTest').contains('likes: 5')
+        cy.get('#btn-likes').click()
+        cy.get('.likesTest').should('contain', 'likes: 6')
       })
       it('A blog can be deleted', function(){
-          cy.get('#btn-details').click()
-          cy.get('#btn-delete').click()
-          cy.get('.swal2-confirm').click()
-          cy.get('#initialList').should('be.empty')
+        cy.get('#btn-details').click()
+        cy.get('#btn-delete').click()
+        cy.get('.swal2-confirm').click()
+        cy.get('#initialList').should('be.empty')
       })
       it('A blog cannot be deleted by another user', function(){
         cy.login({
