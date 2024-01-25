@@ -45,7 +45,8 @@ describe('blog app', () => {
       cy.addBlog({
         title: 'A blog created by Cypress with commands',
         author: 'Gon Freecks',
-        url: 'hunterXhunter.com'
+        url: 'hunterXhunter.com',
+        likes: 0
       })
       cy.contains('A blog created by Cypress with commands')
     })
@@ -55,14 +56,15 @@ describe('blog app', () => {
         cy.addBlog({
             title: 'A blog created by Cypress with commands',
             author: 'Gon Freecks',
-            url: 'hunterXhunter.com'
+            url: 'hunterXhunter.com',
+            likes: 5
         })
       })
       it('A blog can have a like', function(){
           cy.get('#btn-details').click()
-          cy.get('.likesTest').contains('likes: 0')
+          cy.get('.likesTest').contains('likes: 5')
           cy.get('#btn-likes').click()
-          cy.get('.likesTest').should('contain', 'likes: 1')
+          cy.get('.likesTest').should('contain', 'likes: 6')
       })
       it('A blog can be deleted', function(){
           cy.get('#btn-details').click()
@@ -77,7 +79,36 @@ describe('blog app', () => {
         cy.get('#btn-details').click()
         cy.get('#container-btnDelete').should('be.empty')
       })
+      describe('Interacting with serveral blogs', function(){
+        beforeEach(function(){
+          cy.addBlog({
+            title: 'The title with the last most likes',
+            author: 'Gon Freecks',
+            url: 'hunterXhunter.com',
+            likes: 20
+          })
+          cy.addBlog({
+            title: 'The title with the most likes',
+            author: 'Killua Zoldic',
+            url: 'hunterXhunter.com',
+            likes: 50
+          })
+          cy.addBlog({
+            title: 'The title with the second most likes',
+            author: 'Kurapika Kurta',
+            url: 'hunterXhunter.com',
+            likes: 30
+          })
+        })
+
+        it('Sort by likes', function(){
+          cy.wait(5000)
+          cy.contains('Sort by likes').click()
+          cy.get('.blog').eq(0).should('contain', 'The title with the most likes')
+          cy.get('.blog').eq(1).should('contain', 'The title with the second most likes')
+        })
+
+      })
     })
-    
   })
 })

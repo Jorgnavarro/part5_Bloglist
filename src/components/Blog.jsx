@@ -26,7 +26,7 @@ const Blog = ({ blog, updatedBlog, userDDBB, deleteABlog }) => {
   }
 
   return (
-    <li id="colorList" className='list-group-item list-group-item-light'>
+    <li id="colorList" className='list-group-item list-group-item-light blog'>
       <div className="containerInfoBlog">
         {blog.title} - {blog.author}
         <button id="btn-details" className="btn btn-outline-primary" onClick={toggleVisibility}>{visible ? 'Hide details':'View details'}</button>
